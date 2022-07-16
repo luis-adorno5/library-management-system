@@ -1,13 +1,13 @@
-package com.luisadorno.librarymanagementsystem;
+package com.luisadorno.librarymanagementsystemapi;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class LibraryManagementSystemApplication {
+public class LibraryManagementSystemApiApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(LibraryManagementSystemApplication.class, args);
+		SpringApplication.run(LibraryManagementSystemApiApplication.class, args);
 	}
 
 }
