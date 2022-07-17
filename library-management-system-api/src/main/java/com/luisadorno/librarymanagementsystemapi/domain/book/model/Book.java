@@ -35,7 +35,7 @@ public class Book {
 
     private String title;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "book_id")
     private Set<Category> categoryId;
 

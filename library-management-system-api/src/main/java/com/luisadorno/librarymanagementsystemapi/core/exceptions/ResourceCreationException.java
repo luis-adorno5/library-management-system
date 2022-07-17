@@ -5,5 +5,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(value = HttpStatus.CONFLICT)
 public class ResourceCreationException extends RuntimeException {
-
+    public ResourceCreationException(String msg) {
+        super(msg);
+    }
 }
