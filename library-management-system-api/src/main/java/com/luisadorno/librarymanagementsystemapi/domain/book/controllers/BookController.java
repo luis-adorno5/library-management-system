@@ -2,12 +2,16 @@ package com.luisadorno.librarymanagementsystemapi.domain.book.controllers;
 
 import java.util.UUID;
 
+import javax.ws.rs.Path;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+import com.luisadorno.librarymanagementsystemapi.domain.author.model.Author;
+import com.luisadorno.librarymanagementsystemapi.domain.author.services.AuthorService;
 import com.luisadorno.librarymanagementsystemapi.domain.book.model.Book;
 import com.luisadorno.librarymanagementsystemapi.domain.book.services.BookService;
 
@@ -18,15 +22,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-@Controller
+@RestController
 @RequestMapping("/api/v1/books")
 public class BookController {
 
     private BookService bookService;
+    private AuthorService authorService;
 
     @Autowired
-    public BookController(BookService bookService) {
+    public BookController(BookService bookService, AuthorService authorService) {
         this.bookService = bookService;
+        this.authorService = authorService;
     }
 
     @PostMapping
@@ -47,9 +53,12 @@ public class BookController {
         return new ResponseEntity<>(book, HttpStatus.OK);
     }
 
-    @PutMapping("{id}")
-    public ResponseEntity<Book> updateBook(@PathVariable("id") UUID id, @RequestBody Book book) {
-        Book updatedBook = bookService.updateBook(id, book);
+    @PutMapping("{book_id}/{authorId}")
+    public ResponseEntity<Book> updateBook(@PathVariable("book_id") UUID book_id,
+            @PathVariable("authorId") UUID author_id) {
+        Book bookToUpdate = bookService.getById(book_id);
+        Author bookAuthor = authorService.getById(author_id);
+        Book updatedBook = bookService.addAuthor(bookToUpdate, bookAuthor);
         return new ResponseEntity<>(updatedBook, HttpStatus.OK);
     }
 

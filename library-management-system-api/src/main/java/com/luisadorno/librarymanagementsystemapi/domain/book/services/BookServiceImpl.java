@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.luisadorno.librarymanagementsystemapi.core.exceptions.ResourceCreationException;
 import com.luisadorno.librarymanagementsystemapi.core.exceptions.ResourceNotFoundException;
+import com.luisadorno.librarymanagementsystemapi.domain.author.model.Author;
 import com.luisadorno.librarymanagementsystemapi.domain.book.model.Book;
 import com.luisadorno.librarymanagementsystemapi.domain.book.repository.BookRepository;
 
@@ -60,6 +61,12 @@ public class BookServiceImpl implements BookService {
                         () -> new ResourceNotFoundException(String.format("Book with id: {%s} does not exist.", id)));
         bookRepository.delete(bookToDelete);
         return true;
+    }
+
+    @Override
+    public Book addAuthor(Book book, Author author) {
+        book.addAuthor(author);
+        return bookRepository.save(book);
     }
 
 }
